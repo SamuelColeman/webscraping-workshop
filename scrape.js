@@ -4,11 +4,9 @@ var nightmare = Nightmare({ show: true });
 nightmare
   .goto('https://www.secsports.com/clubhouse/football')
   .click('a[href="https://www.secsports.com/scores/football"]')
-  .wait('h5')
+  .wait('.status')
   .evaluate(function () {
-    console.log('working')
-    var nameNodes = document.querySelectorAll('h5');
-    console.log(nameNodes)
+    var nameNodes = document.querySelectorAll('.status');
     var list = [].slice.call(nameNodes);
     return list.map(function(node){
       return node.innerText
