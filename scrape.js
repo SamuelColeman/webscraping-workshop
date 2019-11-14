@@ -11,18 +11,21 @@ nightmare
   .click('#subnav-teams-dropdown-toggle')
   .wait('a[href="/clubhouse/football/tennessee-volunteers"]')
   .click('a[href="/clubhouse/football/tennessee-volunteers"]')
-  .wait('.season-line')
-  .evaluate(function () {
-    var nameNodes = document.querySelectorAll('.season-line');
+  .wait('.date')
+  .evaluate(() => {
+    var nameNodes = document.querySelectorAll('.date');
     var list = [].slice.call(nameNodes);
-    return list.map(function(node){
-      return node.innerText
-    });
+    return list.reduce((acc, node, index) => {
+      if (index > 5 && index < 18) {
+        acc.push(node.innerText);
+      }
+      return acc
+    }, []);
   })
   .end()
-  .then(function (result) {
+  .then((result) => {
     console.log(result);
   })
-  .catch(function (error) {
+  .catch((error) => {
     console.error('Search failed:', error);
   });
