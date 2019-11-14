@@ -11,16 +11,19 @@ nightmare
   .click('#subnav-teams-dropdown-toggle')
   .wait('a[href="/clubhouse/football/tennessee-volunteers"]')
   .click('a[href="/clubhouse/football/tennessee-volunteers"]')
-  .wait('.date')
+  .wait('.outcome')
   .evaluate(() => {
-    var nameNodes = document.querySelectorAll('.date');
+    var nameNodes = document.querySelectorAll('.outcome');
     var list = [].slice.call(nameNodes);
-    return list.reduce((acc, node, index) => {
-      if (index > 5 && index < 18) {
+    var reducedList = list.reduce((acc, node, index) => {
         acc.push(node.innerText);
-      }
       return acc
     }, []);
+    if (reducedList[reducedList.length - 1] === 'W') {
+      return 'Yes, they won'
+    } else {
+      return 'No, no they did not'
+    }
   })
   .end()
   .then((result) => {
