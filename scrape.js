@@ -1,5 +1,6 @@
 var Nightmare = require('nightmare');
 var nightmare = Nightmare({ show: true });
+var fs = require('fs');
 
 nightmare
   .goto('https://www.secsports.com/')
@@ -27,7 +28,7 @@ nightmare
   })
   .end()
   .then((result) => {
-    console.log(result);
+    fs.writeFileSync('response.json', JSON.stringify(result));
   })
   .catch((error) => {
     console.error('Search failed:', error);
